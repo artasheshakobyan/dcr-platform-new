@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DCR Platform — What's New</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #080E1C; --card: #0F1824; --card2: #162030; --border: #1E2D42;
+  --teal: #00D4B8; --blue: #3B82F6; --violet: #8B5CF6; --amber: #F59E0B;
+  --red: #EF4444; --green: #10B981; --muted: #4B6280; --dim: #8BA3BE; --text: #D1E4F5;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+.header {
+  background: var(--card); border-bottom: 1px solid var(--border);
+  padding: 32px 48px; display: flex; justify-content: space-between; align-items: center;
+}
+.header-logo { display: flex; align-items: center; gap: 14px; }
+.header-icon {
+  width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, var(--teal), var(--blue));
+  display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #000;
+}
+.header-title { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+.header-sub { color: var(--dim); font-size: 12px; margin-top: 2px; }
+.header-meta { color: var(--muted); font-size: 12px; text-align: right; }
+.header-date { font-family: 'JetBrains Mono', monospace; color: var(--teal); font-weight: 700; font-size: 14px; }
+
+.main { padding: 48px; max-width: 1000px; margin: 0 auto; }
+
+.intro {
+  background: var(--card); border: 1px solid rgba(0,212,184,0.2); border-radius: 16px;
+  padding: 28px 32px; margin-bottom: 40px;
+  background-image: radial-gradient(ellipse at top right, rgba(0,212,184,0.05) 0%, transparent 60%);
+}
+.intro-title { font-size: 26px; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 8px; }
+.intro-sub { color: var(--dim); font-size: 14px; line-height: 1.6; }
+
+.session-label {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 20px;
+}
+.session-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
+.session-text { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.session-line { flex: 1; height: 1px; background: var(--border); }
+
+.files-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 48px; }
+
+.file-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 24px 26px; text-decoration: none; color: var(--text);
+  transition: border-color 0.15s, transform 0.1s; display: block;
+}
+.file-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+.file-card.wide { grid-column: span 2; }
+
+.file-icon { font-size: 28px; margin-bottom: 12px; }
+.file-type {
+  display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 9px;
+  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px;
+}
+.file-type.html { background: rgba(59,130,246,0.15); color: var(--blue); }
+.file-type.md { background: rgba(139,92,246,0.15); color: var(--violet); }
+
+.file-name { font-size: 15px; font-weight: 800; margin-bottom: 6px; }
+.file-desc { color: var(--dim); font-size: 12px; line-height: 1.5; }
+
+.file-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.tag {
+  padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 600;
+  background: var(--card2); border: 1px solid var(--border); color: var(--muted);
+}
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+.section-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+}
+.section-bar { width: 3px; height: 20px; background: var(--teal); border-radius: 2px; }
+.section-title { font-size: 14px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text); }
+
+.priority-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.priority-table th {
+  text-align: left; padding: 10px 14px; background: var(--card2);
+  color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; border-bottom: 1px solid var(--border);
+}
+.priority-table th:first-child { border-radius: 8px 0 0 0; }
+.priority-table th:last-child { border-radius: 0 8px 0 0; }
+.priority-table td { padding: 10px 14px; border-bottom: 1px solid rgba(30,45,66,0.5); }
+.priority-table tr:last-child td { border-bottom: none; }
+.priority-table tr:hover td { background: rgba(22,32,48,0.5); }
+
+.risk-badge {
+  display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px;
+  font-size: 10px; font-weight: 700;
+}
+.risk-critical { background: rgba(239,68,68,0.15); color: var(--red); }
+.risk-high { background: rgba(245,158,11,0.15); color: var(--amber); }
+.risk-medium { background: rgba(59,130,246,0.15); color: var(--blue); }
+
+.effort-bar { display: flex; gap: 4px; align-items: center; }
+.effort-dot { width: 6px; height: 6px; border-radius: 50%; }
+.effort-filled { background: var(--teal); }
+.effort-empty { background: var(--border); }
+
+.session-block {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px 24px; margin-bottom: 12px;
+}
+.session-block-title { font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+.session-block-desc { color: var(--dim); font-size: 12px; line-height: 1.5; }
+
+.footer {
+  border-top: 1px solid var(--border); padding: 24px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  color: var(--muted); font-size: 11px;
+}
+.footer-mono { font-family: 'JetBrains Mono', monospace; color: var(--teal); font-size: 10px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">
+    <div class="header-icon">D</div>
+    <div>
+      <div class="header-title">DCR Platform</div>
+      <div class="header-sub">Session deliverables package — March 2026</div>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="header-date">dcr-platform-new.zip</div>
+    <div>4 files · 3 sessions</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <div class="intro">
+    <div class="intro-title">Everything built since v2.0</div>
+    <div class="intro-sub">
+      This package contains all deliverables from the three sessions after the v2 platform rebuild:
+      performance &amp; scale audit for 100+ projects, ideas for PMs and leadership with Codex prompts,
+      Gantt + export improvements, and an interactive UI demo with all proposed enhancements.
+      Open <code style="background:var(--card2);padding:2px 6px;border-radius:4px;font-family:monospace;font-size:12px">dcr-ui-ideas.html</code> in a browser to see all UI concepts live.
+    </div>
+  </div>
+
+  <!-- Files -->
+  <div class="section-head">
+    <div class="session-bar"></div>
+    <div class="section-bar"></div>
+    <div class="section-title">Files in this package</div>
+  </div>
+
+  <div class="files-grid">
+
+    <a href="dcr-ui-ideas.html" class="file-card wide">
+      <div class="file-icon">🎨</div>
+      <div class="file-type html">HTML · Interactive</div>
+      <div class="file-name">DCR UI Ideas — Interactive Demo</div>
+      <div class="file-desc">
+        All 8 UI improvement concepts built to spec using your exact design system (dark theme, teal/blue palette, JetBrains Mono, same card components). 
+        Every tab is interactive — click project cards to expand, use the week navigator with keyboard arrows, see the operator Gantt, 
+        global search overlay, smart nudges and KPI dials.
+      </div>
+      <div class="file-tags">
+        <span class="tag">Smart Project Cards</span>
+        <span class="tag">Auto Suggestions</span>
+        <span class="tag">Inline Progress Table</span>
+        <span class="tag">Week Navigator</span>
+        <span class="tag">Operator Gantt++</span>
+        <span class="tag">KPI Dials</span>
+        <span class="tag">Cmd+K Search</span>
+        <span class="tag">Smart Nudges</span>
+      </div>
+    </a>
+
+    <a href="DCR_Scale_Audit.md" class="file-card">
+      <div class="file-icon">🔬</div>
+      <div class="file-type md">Markdown</div>
+      <div class="file-name">Scale & Performance Audit</div>
+      <div class="file-desc">
+        Full page-by-page audit for 100+ project scale. Identifies the critical 1,000-row Supabase limit causing silent data loss right now,
+        O(n²) patterns in Progress and Alerts, missing database indexes, and a single unified Codex prompt to fix all 5 pages.
+      </div>
+      <div class="file-tags">
+        <span class="tag">1000-row bug (critical)</span>
+        <span class="tag">O(n²) fixes</span>
+        <span class="tag">SQL indexes</span>
+        <span class="tag">Codex prompt</span>
+      </div>
+    </a>
+
+    <a href="DCR_Ideas_and_PDF_Export.md" class="file-card">
+      <div class="file-icon">💡</div>
+      <div class="file-type md">Markdown</div>
+      <div class="file-name">Ideas for PMs & Leadership + PDF Export</div>
+      <div class="file-desc">
+        9 feature ideas ranked by value, each with a copy-paste Codex prompt. Covers weekly PM email digest, 
+        project timeline Gantt, quick-log history, completion checklist, executive summary page, revenue-at-risk indicator, 
+        pipeline gap card, CSV + PDF export.
+      </div>
+      <div class="file-tags">
+        <span class="tag">Executive summary page</span>
+        <span class="tag">PDF export</span>
+        <span class="tag">CSV export</span>
+        <span class="tag">PM email digest</span>
+        <span class="tag">Timeline Gantt</span>
+      </div>
+    </a>
+
+    <a href="DCR_Improvements_Codex_Prompts.md" class="file-card">
+      <div class="file-icon">⚡</div>
+      <div class="file-type md">Markdown</div>
+      <div class="file-name">Improvements Codex Prompts</div>
+      <div class="file-desc">
+        Three deep-dive improvements with full implementation detail: Project Gantt Chart (project × week matrix),
+        Planned vs Actual systems visibility, and Command Center week navigation arrows. 
+        Each includes complete data model explanation + production-ready Codex prompt.
+      </div>
+      <div class="file-tags">
+        <span class="tag">Project Gantt</span>
+        <span class="tag">Planned vs Actual</span>
+        <span class="tag">Week navigation</span>
+        <span class="tag">Ready to paste</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- What to build first -->
+  <div class="section-head">
+    <div class="section-bar"></div>
+    <div class="section-title">What to build first — priority order</div>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:40px">
+    <table class="priority-table">
+      <thead>
+        <tr>
+          <th>Fix / Feature</th>
+          <th>File</th>
+          <th>Risk if skipped</th>
+          <th>Effort</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight:700">Supabase 1,000-row limit</td>
+          <td style="color:var(--dim)">Scale Audit</td>
+          <td><span class="risk-badge risk-critical">Silent data loss NOW</span></td>
+          <td>
+            <div class="effort-bar">
+              <div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div>
+              <div class="effort-dot effort-empty"></div><div class="effort-dot effort-empty"></div><div class="effort-dot effort-empty"></div>
+              <span style="color:var(--dim);font-size:11px;margin-left:4px">30 min</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">O(n²) progress loops</td>
+          <td style="color:var(--dim)">Scale Audit</td>
+          <td><span class="risk-badge risk-high">Freezes at 100 projects</span></td>
+          <td>
+            <div class="effort-bar">
+              <div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div>
+              <div class="effort-dot effort-empty"></div><div class="effort-dot effort-empty"></div>
+              <span style="color:var(--dim);font-size:11px;margin-left:4px">1–2h</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">SQL indexes</td>
+          <td style="color:var(--dim)">Scale Audit</td>
+          <td><span class="risk-badge risk-high">Slow queries as data grows</span></td>
+          <td>
+            <div class="effort-bar">
+              <div class="effort-dot effort-filled"></div>
+              <div class="effort-dot effort-empty"></div><div class="effort-dot effort-empty"></div><div class="effort-dot effort-empty"></div><div class="effort-dot effort-empty"></div>
+              <span style="color:var(--dim);font-size:11px;margin-left:4px">15 min</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Project Gantt Chart</td>
+          <td style="color:var(--dim)">Codex Prompts</td>
+          <td><span class="risk-badge risk-medium">Can't see project vs plan</span></td>
+          <td>
+            <div class="effort-bar">
+              <div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div>
+              <div class="effort-dot effort-empty"></div>
+              <span style="color:var(--dim);font-size:11px;margin-left:4px">3–4h</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Smart Project Cards + Search</td>
+          <td style="color:var(--dim)">UI Ideas (Tab 1, 7)</td>
+          <td><span class="risk-badge risk-high">Unusable with 100 projects</span></td>
+          <td>
+            <div class="effort-bar">
+              <div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div>
+              <div class="effort-dot effort-empty"></div><div class="effort-dot effort-empty"></div>
+              <span style="color:var(--dim);font-size:11px;margin-left:4px">2h</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">CSV + PDF export</td>
+          <td style="color:var(--dim)">Ideas & PDF Export</td>
+          <td><span class="risk-badge risk-medium">Manual copy-paste in every meeting</span></td>
+          <td>
+            <div class="effort-bar">
+              <div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div>
+              <div class="effort-dot effort-empty"></div><div class="effort-dot effort-empty"></div>
+              <span style="color:var(--dim);font-size:11px;margin-left:4px">2–3h</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Executive summary page</td>
+          <td style="color:var(--dim)">Ideas & PDF Export</td>
+          <td><span class="risk-badge risk-medium">Leadership has no single-screen view</span></td>
+          <td>
+            <div class="effort-bar">
+              <div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div>
+              <div class="effort-dot effort-empty"></div>
+              <span style="color:var(--dim);font-size:11px;margin-left:4px">4h</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-weight:700">Auto suggestions + smart nudges</td>
+          <td style="color:var(--dim)">UI Ideas (Tab 2, 8)</td>
+          <td><span class="risk-badge risk-medium">Platform is reactive not proactive</span></td>
+          <td>
+            <div class="effort-bar">
+              <div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div><div class="effort-dot effort-filled"></div>
+              <span style="color:var(--dim);font-size:11px;margin-left:4px">5–6h</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Session context -->
+  <div class="section-head">
+    <div class="section-bar"></div>
+    <div class="section-title">Sessions covered by this package</div>
+  </div>
+
+  <div class="session-block">
+    <div class="session-block-title">Session 1 — Platform Improvements + Gantt</div>
+    <div class="session-block-desc">Three big improvements to the v2.0 platform: Project Gantt Chart showing project×week matrix with planned vs actual systems, Planned vs Actual visibility on the existing Operators Gantt, and Command Center week navigation arrows. Also covered PDF/export strategy and 9 additional ideas. → <strong>DCR_Improvements_Codex_Prompts.md</strong> and <strong>DCR_Ideas_and_PDF_Export.md</strong></div>
+  </div>
+
+  <div class="session-block">
+    <div class="session-block-title">Session 2 — Scale & Performance Audit</div>
+    <div class="session-block-desc">Full audit of every page for 100+ active project scale. Found the critical Supabase 1,000-row default limit causing silent data loss in production right now. Identified O(n²) patterns in Progress and Alerts pages, missing composite indexes, no text search on any list, and zero pagination. Produced SQL to run immediately and a unified Codex prompt for all fixes. → <strong>DCR_Scale_Audit.md</strong></div>
+  </div>
+
+  <div class="session-block">
+    <div class="session-block-title">Session 3 — UI Ideas + Interactive Demo</div>
+    <div class="session-block-desc">Eight UI concepts to make the platform more automated, clearer, and better looking — all built as a live interactive demo using the exact DCR design system. Covers collapse-by-default cards, auto action suggestions, inline progress table with sparklines, interactive week navigator, operator Gantt with heatmap, KPI dials, global Cmd+K search, and smart nudges. → <strong>dcr-ui-ideas.html</strong></div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <div>DCR Platform · March 2026 · Open dcr-ui-ideas.html in any browser to see interactive demos</div>
+  <div class="footer-mono">dcr-platform-new.zip</div>
+</div>
+
+</body>
+</html>
